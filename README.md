@@ -9,40 +9,38 @@ This project demonstrates clean routing, CRUD operations, and JSON-style respons
 ## 🚀 Features
 
 - 🧾 **CRUD API** for product management  
-- 💾 **In-memory data storage** using Clojure atoms  
-- ⚙️ Built with **Leiningen**, **Ring**, and **Compojure**  
+- 💾 **Persistent data storage** using MongoDB
+- ⚙️ Built with **Leiningen**, **Ring**, and **Compojure** and **Monger**
 - 🧱 RESTful routes for clean structure  
-- 🧠 Easy to extend for database integration (PostgreSQL, MongoDB, etc.)
+- 🧠 UUID-based product IDs for uniqueness
 
 ---
 
 ## 🧩 Tech Stack
 
-| Component | Description |
-|------------|-------------|
-| **Language** | Clojure |
-| **Build Tool** | Leiningen |
+| Component         | Description      |
+|-------------------|------------------|
+| **Language**      | Clojure          |
+| **Build Tool**    | Leiningen        |
 | **Web Framework** | Ring + Compojure |
-| **Data Store** | In-memory via `atom` |
-| **Port** | 3000 (default) |
+| **Database**      | `Monger`         |
+| **Port**          | 3000 (default)   |
 
 ---
 
 ## 📦 Project Structure
-
 
 ```
 inventory-api/
 ├── src/
 │   └── inventory_api/
 │       ├── core.clj        # Starts the server
-│       └── routes.clj      # All REST API endpoints
+│       ├── routes.clj      # All REST API endpoints
+        └── db.clj          # MongoDB connection and CRUD functions
 ├── project.clj              # Leiningen dependencies & entry point
 ├── README.md
 └── resources/
-
 ```
-
 ## ⚙️ Setup & Run
 
 ### 1️⃣ Clone the repository
@@ -52,7 +50,13 @@ inventory-api/
   cd inventory-api
 ````
 
-### 2️⃣ Run the project
+### 2️⃣ Start MongoDB
+```
+mongod
+If using authentication or a custom port, update db.clj accordingly.
+```
+
+### 3️⃣ Run the project
 
 ```bash
   lein run
@@ -81,13 +85,13 @@ The server will start at **[http://localhost:3000](http://localhost:3000)**
 ```json
 [
   {
-    "id": 1,
+    "id": "550e8400-e29b-41d4-a716-446655440000",
     "name": "Notebook",
     "qty": 5,
     "price": 45.0
   },
   {
-    "id": 2,
+    "id": "550e8400-e29b-41d4-a716-446655440001",
     "name": "Pen",
     "qty": 10,
     "price": 5.5
@@ -99,12 +103,11 @@ The server will start at **[http://localhost:3000](http://localhost:3000)**
 
 ## 🧱 Future Improvements
 
-* Connecting Mongodb and Streaming data in real-time
-* Add JSON parsing middleware for real JSON requests
-* Replace in-memory storage with a database (PostgreSQL / MongoDB)
-* Add request validation and error handling middleware
-* Add unit and integration tests with `clojure.test`
-
+* Kafka integration for real-time inventory updates and messaging
+* Add request validation and better error handling middleware
+* Add unit and integration tests with clojure.test
+* Add Swagger/OpenAPI documentation for the API
+* Support bulk inserts and query filtering
 
 ---
 
